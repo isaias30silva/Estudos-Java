@@ -1,21 +1,25 @@
 //Gerente é um Funcionario, Gerente herda da class Funcionario
-public class Gerente extends Funcionario {
-	
-	private int senha;
-	
-	//método que verifica se a senha do gerente está correta, 
-	public boolean autentica(int senha) {
-		if(this.senha == senha) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
+//Gerente implementa a interface Autenticavel, e portanto, deve implementar seus métodos
+public class Gerente extends Funcionario implements Autenticavel {
 
-	public void setSenha(int senha) {
-		this.senha = senha;
+	private AutenticacaoUtil autenticador;
+
+	public Gerente() {
+		this.autenticador = new AutenticacaoUtil();
 	}
-	
+	public double getBonificacao() {
+		System.out.println("Chamando o método de bonificação do GERENTE");
+		return super.getSalario();
+	}
+
+	@Override
+	public void setSenha(int senha) {
+		this.autenticador.setSenha(senha);
+	}
+
+	@Override
+	public boolean autentica(int senha) {
+		return this.autenticador.autentica(senha);
+	}
 
 }
